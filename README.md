@@ -1,10 +1,8 @@
-# Mariner-Autoinstaller
+# Mariner Autoinstaller
 
 This script is intended for a fresh Rasbian Lite installation on a Raspberry Pi Zero
 
-At the top of the script you can see
-`version="0.1.1-1"`
-Make sure that reflects the release from [luizribeiro/mariner](https://github.com/luizribeiro/mariner/releases) that you want to have downloaded and installed
+It will expande the filesystem to the full size of your SD card, install Mariner, set up a folder on the Pi as a USB drive, and create a sambashare.
 
 ### Download
 Either from this Github or using
@@ -12,6 +10,10 @@ Either from this Github or using
 
 ### Prepare for execution
 `sudo chmod +x ./mariner.sh`
+
+At the top of the script you can see
+`version="0.1.1-1"`
+Make sure that reflects the release from [luizribeiro/mariner](https://github.com/luizribeiro/mariner/releases) that you want to have downloaded and installed
 
 ### Execute
 `sudo bash ./mariner.sh`

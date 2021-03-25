@@ -2,7 +2,7 @@
 
 This script is intended for a fresh Rasbian Lite installation on a Raspberry Pi Zero
 
-It will expande the filesystem to the full size of your SD card, install Mariner, set up a folder on the Pi as a USB drive, and create a sambashare.
+It will expand the filesystem to the full size of your SD card, install Mariner, set up a folder on the Pi as a USB drive, and create a sambashare.
 
 ### Download
 Either from this Github or using

@@ -8,15 +8,9 @@ function info { echo -e "\e[32m[info] $*\e[39m"; }
 function warn  { echo -e "\e[33m[warn] $*\e[39m"; }
 function error { echo -e "\e[31m[error] $*\e[39m"; exit 1; }
 
-if ! [ $(id -u) = 0 ]; then
+if ! [ "$(id -u)" = 0 ]; then
     warn "This script needs to be run as root." >&2
     exit 1
-fi
-
-if [ $SUDO_USER ]; then
-    real_user=$SUDO_USER
-else
-    real_user=$(whoami)
 fi
 
 # check if the reboot flag file exists. 
@@ -61,7 +55,7 @@ if [ ! -f ./resume-mariner ]; then
         case $input in
             [yY][eE][sS]|[yY])
         info
-        echo `passwd pi`
+        echo "$(passwd pi)"
         break
         ;;
             [nN][oO]|[nN])
@@ -79,8 +73,8 @@ if [ ! -f ./resume-mariner ]; then
 
         case $input in
             [yY][eE][sS]|[yY])
-        read -p "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
-        sudo raspi-config nonint do_hostname $hostname
+        read -pr "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
+        sudo raspi-config nonint do_hostname "$hostname"
         info "You can now access this Pi from $hostname.local"
         break
         ;;
@@ -143,7 +137,7 @@ else
     info "Setting up Sambashare; this could take a long time"
     sudo apt-get -y install samba winbind -y
 
-    read -p "Enter a short description of your printer, like the model: "  model
+    read -pr "Enter a short description of your printer, like the model: "  model
     echo "[USB_Share]
     comment = $model
     path = /mnt/usb_share/
@@ -170,7 +164,7 @@ else
             [yY][eE][sS]|[yY])
         warn "Rebooting in 5 seconds"
         sleep 5
-        echo `sudo reboot`
+        echo "$(sudo reboot)"
         break
         ;;
             [nN][oO]|[nN])

@@ -105,8 +105,7 @@ else
     sudo apt-get -qq update >/dev/null && sudo apt-get -qq -y upgrade >/dev/null
 
     info
-    info "Setting up Mariner 
-    prerequisites"
+    info "Setting up Mariner prerequisites"
     echo "dtoverlay=dwc2,dr_mode=peripheral" >> /boot/config.txt
     echo "enable_uart=1" >> /boot/config.txt
     sudo sed -i 's/console=serial0,115200 //g' /boot/cmdline.txt

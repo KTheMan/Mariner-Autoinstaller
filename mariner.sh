@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-version="0.1.1-1"
-
 # filename: mariner.sh
 
 function info { echo -e "\e[32m[info] $*\e[39m"; }
@@ -100,6 +98,10 @@ else
     # remove the temporary file that we created to check for reboot
     sudo rm -f ./resume-mariner
     # continue with rest of the script
+    
+    info "Adding Mariner's PPA repository"
+    curl -sL gpg.l9o.dev | sudo apt-key add -
+    echo "deb https://ppa.l9o.dev/raspbian ./" | sudo tee /etc/apt/sources.list.d/l9o.list
 
     info "Updating repositories and upgrade software; this could take a long time"
     sudo apt-get -qq update >/dev/null && sudo apt-get -qq -y upgrade >/dev/null
@@ -153,8 +155,7 @@ else
 
     info ""
     info "Installing Mariner"
-    wget https://github.com/luizribeiro/mariner/releases/download/v${version}/mariner3d_${version}_armhf.deb
-    sudo apt-get -qq -y install ./mariner3d_${version}_armhf.deb
+    sudo apt-get install mariner3d
 
     while true
     do

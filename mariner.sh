@@ -73,7 +73,7 @@ if [ ! -f ./resume-mariner ]; then
 
         case $input in
             [yY][eE][sS]|[yY])
-        read -pr "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
+        read -r -p "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
         sudo raspi-config nonint do_hostname "$hostname"
         info "You can now access this Pi from $hostname.local"
         break
@@ -105,7 +105,8 @@ else
     sudo apt-get -qq update >/dev/null && sudo apt-get -qq -y upgrade >/dev/null
 
     info
-    info "Setting up Mariner prerequisites"
+    info "Setting up Mariner 
+    prerequisites"
     echo "dtoverlay=dwc2,dr_mode=peripheral" >> /boot/config.txt
     echo "enable_uart=1" >> /boot/config.txt
     sudo sed -i 's/console=serial0,115200 //g' /boot/cmdline.txt

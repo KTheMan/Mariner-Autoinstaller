@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-version="0.1.1-1"
-
 # filename: mariner.sh
 
 function info { echo -e "\e[32m[info] $*\e[39m"; }
@@ -73,7 +71,7 @@ if [ ! -f ./resume-mariner ]; then
 
         case $input in
             [yY][eE][sS]|[yY])
-        read -pr "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
+        read -r -p "Enter a new hostname (Default 'raspberrypi'): " -e -i "mariner"  hostname
         sudo raspi-config nonint do_hostname "$hostname"
         info "You can now access this Pi from $hostname.local"
         break
@@ -100,6 +98,10 @@ else
     # remove the temporary file that we created to check for reboot
     sudo rm -f ./resume-mariner
     # continue with rest of the script
+    
+    info "Adding Mariner's PPA repository"
+    curl -sL gpg.l9o.dev | sudo apt-key add -
+    echo "deb https://ppa.l9o.dev/raspbian ./" | sudo tee /etc/apt/sources.list.d/l9o.list
 
     info "Updating repositories and upgrade software; this could take a long time"
     sudo apt-get -qq update >/dev/null && sudo apt-get -qq -y upgrade >/dev/null
@@ -123,11 +125,8 @@ else
     sudo sed -i 's/exit 0//g' /etc/rc.local
 
     echo '/bin/sleep 5
-
     modprobe g_mass_storage file=/piusb.bin removable=1 ro=0 stall=0
-
     /sbin/iwconfig wlan0 power off
-
     exit 0' >> /etc/rc.local
 
     sudo systemctl stop serial-getty@ttyS0
@@ -153,8 +152,7 @@ else
 
     info ""
     info "Installing Mariner"
-    wget https://github.com/luizribeiro/mariner/releases/download/v${version}/mariner3d_${version}_armhf.deb
-    sudo apt-get -qq -y install ./mariner3d_${version}_armhf.deb
+    sudo apt-get install mariner3d
 
     while true
     do

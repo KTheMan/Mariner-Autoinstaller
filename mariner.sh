@@ -125,11 +125,8 @@ else
     sudo sed -i 's/exit 0//g' /etc/rc.local
 
     echo '/bin/sleep 5
-
     modprobe g_mass_storage file=/piusb.bin removable=1 ro=0 stall=0
-
     /sbin/iwconfig wlan0 power off
-
     exit 0' >> /etc/rc.local
 
     sudo systemctl stop serial-getty@ttyS0
